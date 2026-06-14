@@ -437,23 +437,96 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 680px) {
-    .topbar { padding: 12px 20px; }
-    .hero { padding: 52px 20px 44px; }
-    .hero h1 { font-size: 36px; letter-spacing: -1px; }
+    /* ── GLOBAL ── */
+    .topbar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+    .topbar-right { font-size: 11px; }
+    .toggle-wrap { padding: 14px 16px; gap: 10px; }
+    .toggle-btn { padding: 9px 14px; font-size: 11px; }
+    .hero { padding: 44px 16px 36px; }
+    .hero h1 { font-size: 30px; letter-spacing: -1px; white-space: normal; flex-wrap: wrap; gap: 6px; justify-content: center; }
     .hero-stats { display: grid; grid-template-columns: 1fr 1fr; }
     .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
     .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+    .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
+    .container { padding: 0 16px; }
+    section { padding: 40px 0; }
+    .highlight-row { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
     .payment-terms, .inc-grid { grid-template-columns: 1fr; }
     .pt-card:first-child, .inc-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+    .pt-card, .inc-col { padding: 22px 20px; }
     .kpi-row { grid-template-columns: 1fr 1fr; }
+    .kpi { padding: 16px; }
     .kpi:nth-child(2) { border-right: none; }
+    .kpi:nth-child(3) { border-right: 1px solid var(--border); }
     .db-body { grid-template-columns: 1fr; }
     .db-sidebar { border-top: 1px solid var(--border); }
     .db-bottom { grid-template-columns: 1fr; }
-    section { padding: 44px 0; }
-    .pricing-header { padding: 28px 24px; }
-    .pt-card, .inc-col { padding: 28px 24px; }
-    footer { padding: 32px 20px 24px; }
+    .pricing-header { padding: 24px 20px; }
+    .price-big { font-size: 44px; letter-spacing: -1px; }
+    .price-chips { gap: 8px; }
+    .chip { font-size: 12px; padding: 7px 12px; }
+    .pt-amount { font-size: 28px; }
+    footer { padding: 28px 16px 20px; }
+
+    /* ── SHOPIFY MOBILE ── */
+    .pros-cons-grid { grid-template-columns: 1fr; }
+    .shopify-plans { grid-template-columns: 1fr; }
+    .verdict-box { flex-direction: column; gap: 12px; padding: 20px; }
+    .dq-header { padding: 24px 20px; }
+    .dq-body { grid-template-columns: 1fr; }
+    .dq-col { padding: 20px; }
+    .dq-col:first-child { border-right: none !important; border-bottom: 1px solid var(--border); }
+    .shopify-support { flex-direction: column; padding: 20px; gap: 16px; }
+    .sp-price { font-size: 24px; }
+
+    /* ── INLINE GRID OVERRIDES ── */
+    /* Support plan cards, post-launch plan cards, cost comparison */
+    [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="padding-right:24px;border-right:1px solid var(--border)"] {
+      padding-right: 0 !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--border) !important;
+      padding-bottom: 20px !important;
+      margin-bottom: 4px !important;
+    }
+    [style*="padding-left:24px"] { padding-left: 0 !important; }
+    [style*="grid-template-columns:1fr 1fr;gap:20px"] { grid-template-columns: 1fr !important; }
+
+    /* ── TABLE & HEADER OVERFLOW FIXES ── */
+    * { max-width: 100%; }
+    .hero-stats { width: 100%; }
+    .kpi-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .db-topbar { flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 16px; }
+    .db-badge { margin-top: 2px; }
+    .db-date { font-size: 10px; }
+    .db-chart { padding: 16px; }
+    .chart-x-labels span { font-size: 9px; }
+    .order-name { font-size: 11.5px; }
+    .order-prod { font-size: 10px; }
+    .kpi-value { font-size: 20px; }
+    .kpi-label { font-size: 10px; }
+    .kpi-delta { font-size: 11px; }
+    .price-big { font-size: 40px !important; letter-spacing: -1px; }
+    .price-big sup { font-size: 20px; margin-top: 10px; }
+    [style*="font-size:52px"] { font-size: 36px !important; }
+    [style*="font-size:42px"] { font-size: 28px !important; }
+    [style*="font-size:36px;font-weight:700;color:var(--white)"] { font-size: 24px !important; }
+    [style*="font-size:34px"] { font-size: 26px !important; }
+    .db-bottom { padding: 16px; gap: 16px; }
+    .mini-title { font-size: 11px; }
+    .bar-label, .bar-val { font-size: 11px; }
+    .ch-name, .ch-pct { font-size: 11px; }
+    .section-title { font-size: 22px !important; }
+    .hero-sub { font-size: 13px; }
+    .hero-badge { font-size: 10px; padding: 5px 12px; }
+    .prep-label { font-size: 10px; }
+    .toggle-label { display: none; }
+    .sp-card { padding: 18px 16px; }
+    .pc-list li { font-size: 13px; }
+    .verdict-box .verdict-text { font-size: 13px; }
+    .pt-amount.advance, .pt-amount { font-size: 26px !important; }
   }
 </style>
 </head>
@@ -513,7 +586,7 @@
 
   <div class="hero-stats">
     <div class="stat-item">
-      <div class="stat-value"><em>₹</em>2,00,000</div>
+      <div class="stat-value"><em>₹</em>2,70,000</div>
       <div class="stat-label">Total Investment</div>
     </div>
     <div class="stat-item">
@@ -785,7 +858,7 @@
     <div class="pricing-wrap animate delay-3">
       <div class="pricing-header">
         <div class="pricing-eyebrow">Total Project Cost</div>
-        <div class="price-big"><sup>₹</sup>2,00,000</div>
+        <div class="price-big"><sup>₹</sup>2,70,000</div>
         <div class="price-note">No GST applicable · One-time fixed cost</div>
         <div class="price-sub" style="margin-top:8px;">Complete delivery in 8 weeks &nbsp;·&nbsp; Mobile-First &nbsp;·&nbsp; Pan India Ready</div>
         <div class="price-chips">
@@ -800,13 +873,13 @@
       <div class="payment-terms">
         <div class="pt-card">
           <div class="pt-label advance">Advance — To Begin</div>
-          <div class="pt-amount advance">₹1,00,000</div>
+          <div class="pt-amount advance">₹1,35,000</div>
           <p class="pt-desc">50% paid upfront. This confirms the project kick-off, design starts immediately, and your slot in our development schedule is secured.</p>
           <span class="pt-when advance">Due: Before Week 1 Starts</span>
         </div>
         <div class="pt-card">
           <div class="pt-label balance">Balance — On Completion</div>
-          <div class="pt-amount">₹1,00,000</div>
+          <div class="pt-amount">₹1,35,000</div>
           <p class="pt-desc">Remaining 50% after the complete platform is delivered, tested, and you're satisfied — paid before source code handover and go-live.</p>
           <span class="pt-when balance">Due: After Final Delivery & Approval</span>
         </div>
@@ -988,7 +1061,7 @@
         <div class="pc-title pro">✅ Pros</div>
         <ul class="pc-list">
           <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Quick go-live in 2 weeks</strong> — No custom development cycles. Your store is live and selling within 14 days of kickoff.</div></li>
-          <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Lower upfront cost</strong> — ₹45,000 vs ₹2,00,000. A smart entry point to validate sales before committing to a custom platform.</div></li>
+          <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Lower upfront cost</strong> — ₹45,000 vs ₹2,70,000. A smart entry point to validate sales before committing to a custom platform.</div></li>
           <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Proven, stable platform</strong> — Shopify handles hosting, security, and uptime. Trusted by 4M+ stores globally.</div></li>
           <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Easy product management</strong> — Your team can manage listings without any training or technical knowledge.</div></li>
           <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">App ecosystem</strong> — Thousands of plug-and-play apps for reviews, upsells, email, and more.</div></li>
@@ -1161,18 +1234,18 @@
         <div style="padding-left:24px;">
           <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600;">⚡ Vybe Route</div>
           <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--muted);">
-            <div style="display:flex;justify-content:space-between;"><span>Vybe platform (one-time, yours forever)</span><span style="color:var(--white);">₹2,00,000</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Vybe platform (one-time, yours forever)</span><span style="color:var(--white);">₹2,70,000</span></div>
             <div style="display:flex;justify-content:space-between;"><span>Server hosting (₹3k × 12)</span><span style="color:var(--white);">₹36,000</span></div>
             <div style="display:flex;justify-content:space-between;"><span>Txn fees (0% — you choose gateway)</span><span style="color:var(--green);">₹0</span></div>
             <div style="display:flex;justify-content:space-between;"><span>Devphant support (₹12k × 12)</span><span style="color:var(--white);">₹1,44,000</span></div>
             <div style="height:1px;background:var(--border);margin:4px 0;"></div>
-            <div style="display:flex;justify-content:space-between;font-weight:700;font-family:'Space Grotesk',sans-serif;"><span style="color:var(--white);">Year 1 Total</span><span style="color:var(--green);font-size:20px;">₹3,80,000</span></div>
-            <div style="font-size:11.5px;color:var(--green);margin-top:2px;">Year 2 drops to ~₹1,80,000. You own the platform.</div>
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-family:'Space Grotesk',sans-serif;"><span style="color:var(--white);">Year 1 Total</span><span style="color:var(--green);font-size:20px;">₹4,50,000</span></div>
+            <div style="font-size:11.5px;color:var(--green);margin-top:2px;">Year 2 drops to ~₹1,80,000. You own the platform forever.</div>
           </div>
         </div>
       </div>
       <div style="margin-top:20px;text-align:center;padding:14px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.2);border-radius:10px;font-size:13px;color:var(--green);font-family:'Space Grotesk',sans-serif;font-weight:600;">
-        Vybe saves ₹37,000 in Year 1 and ₹2,37,000+ in Year 2 onwards — while giving you full ownership, custom branding, and zero platform dependency.
+        Vybe costs ₹33,000 more in Year 1 — but from Year 2, you save ₹2,37,000+ annually with full ownership, custom branding, and zero platform dependency.
       </div>
     </div>
 
