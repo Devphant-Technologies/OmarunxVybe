@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vybe by Devphant – Project Proposal for Omarun Pharma</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black:       #0A0A0A;
+    --black-2:     #111111;
+    --black-3:     #1A1A1A;
+    --black-4:     #222222;
+    --blue:        #4A9EE7;
+    --blue-dim:    rgba(74,158,231,0.12);
+    --blue-border: rgba(74,158,231,0.25);
+    --white:       #FFFFFF;
+    --white-60:    rgba(255,255,255,0.6);
+    --white-10:    rgba(255,255,255,0.08);
+    --border:      rgba(255,255,255,0.08);
+    --muted:       rgba(255,255,255,0.5);
+    --green:       #34D399;
+    --red:         #F87171;
+    --purple:      #A78BFA;
+    --amber:       #FBBF24;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(74,158,231,0.4); }
+    70%  { box-shadow: 0 0 0 10px rgba(74,158,231,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,158,231,0); }
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes barGrow {
+    from { width: 0; }
+  }
+  @keyframes lineGrow {
+    from { stroke-dashoffset: 400; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.15; }
+    50%       { opacity: 0.3; }
+  }
+
+  .animate { opacity: 0; }
+  .animate.visible { animation: fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .animate.delay-1 { animation-delay: 0.08s; }
+  .animate.delay-2 { animation-delay: 0.16s; }
+  .animate.delay-3 { animation-delay: 0.24s; }
+  .animate.delay-4 { animation-delay: 0.32s; }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--black-2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .devphant-logo img { height: 30px; display: block; }
+  .topbar-right { font-size: 12px; color: var(--muted); text-align: right; }
+  .topbar-right strong { color: var(--white-60); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--black-2);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 40px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 320px;
+    background: radial-gradient(ellipse, rgba(74,158,231,0.18) 0%, transparent 70%);
+    pointer-events: none;
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+  .prepared-for {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 32px;
+    animation: fadeIn 0.6s ease forwards;
+  }
+  .prep-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; font-family: 'Space Grotesk', sans-serif; }
+  .prep-sep { width: 24px; height: 1px; background: var(--border); }
+  .omarun-logo img { height: 26px; display: block; filter: brightness(0) invert(1); }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-dim);
+    border: 1px solid var(--blue-border);
+    color: var(--blue);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    animation: fadeIn 0.6s 0.1s ease both;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    animation: pulse-ring 2s infinite;
+  }
+
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(42px, 7vw, 74px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    white-space: nowrap;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.15s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .hero h1 .sep { color: var(--border); font-weight: 300; letter-spacing: 0; }
+  .hero h1 .by-devphant { color: var(--blue); }
+  .hero-tagline-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0 0;
+    animation: fadeUp 0.7s 0.22s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .hero-star { color: var(--amber); font-size: 14px; }
+  .hero-tagline-row p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: 0.2px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 16px auto 40px;
+    max-width: 460px;
+    animation: fadeUp 0.7s 0.28s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .hero-stats {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--black-3);
+    animation: fadeUp 0.7s 0.35s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .stat-item {
+    padding: 20px 32px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-value em { color: var(--blue); font-style: normal; }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Space Grotesk', sans-serif; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  .eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(24px, 4vw, 38px); font-weight: 700; color: var(--white); letter-spacing: -0.5px; margin-bottom: 10px; line-height: 1.15; }
+  .section-desc { font-size: 15px; color: var(--muted); max-width: 600px; margin-bottom: 40px; line-height: 1.7; }
+
+  /* ── HIGHLIGHT CARDS ── */
+  .highlight-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .hl-card { background: var(--black-3); border: 1px solid var(--border); border-radius: 14px; padding: 22px 20px; transition: border-color 0.2s, transform 0.2s; }
+  .hl-card:hover { border-color: var(--blue-border); transform: translateY(-2px); }
+  .hl-icon { font-size: 24px; margin-bottom: 10px; }
+  .hl-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .hl-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── FEATURE GRID ── */
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 16px; }
+  .feat { background: var(--black-3); border: 1px solid var(--border); border-radius: 14px; padding: 26px 22px; transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+  .feat:hover { border-color: var(--blue-border); background: var(--black-4); transform: translateY(-2px); }
+  .feat-num { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 10px; }
+  .feat-icon { font-size: 22px; margin-bottom: 12px; display: block; }
+  .feat h3 { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .feat p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .feat-tag { display: inline-block; margin-top: 12px; background: var(--blue-dim); border: 1px solid var(--blue-border); color: var(--blue); font-size: 10.5px; font-weight: 600; font-family: 'Space Grotesk', sans-serif; padding: 3px 10px; border-radius: 100px; letter-spacing: 0.5px; }
+
+  /* ── DASHBOARD SECTION ── */
+  .dashboard-wrap {
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .db-topbar {
+    background: var(--black-2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .db-title-row { display: flex; align-items: center; gap: 10px; }
+  .db-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--blue); animation: pulse-ring 2s infinite; }
+  .db-title { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--white); }
+  .db-badge { background: var(--blue-dim); border: 1px solid var(--blue-border); color: var(--blue); font-size: 10px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; padding: 2px 10px; border-radius: 100px; letter-spacing: 1px; text-transform: uppercase; }
+  .db-date { font-size: 11px; color: var(--muted); font-family: 'Space Grotesk', sans-serif; }
+
+  /* kpi row */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-bottom: 1px solid var(--border); }
+  .kpi { padding: 22px 22px 18px; border-right: 1px solid var(--border); }
+  .kpi:last-child { border-right: none; }
+  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-family: 'Space Grotesk', sans-serif; margin-bottom: 8px; }
+  .kpi-value { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 6px; animation: countUp 0.6s ease both; }
+  .kpi-delta { font-size: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+  .kpi-delta.up { color: var(--green); }
+  .kpi-delta.down { color: var(--red); }
+
+  /* chart area */
+  .db-body { display: grid; grid-template-columns: 1fr 300px; gap: 0; }
+  .db-chart { padding: 24px; border-right: 1px solid var(--border); }
+  .db-chart-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .db-chart-sub { font-size: 11px; color: var(--muted); margin-bottom: 20px; }
+  .chart-svg-wrap { position: relative; }
+  .chart-svg-wrap svg { width: 100%; overflow: visible; }
+  .chart-line { fill: none; stroke: var(--blue); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 400; animation: lineGrow 1.8s ease forwards; }
+  .chart-area { fill: url(#blueGrad); }
+  .chart-x-labels { display: flex; justify-content: space-between; margin-top: 8px; }
+  .chart-x-labels span { font-size: 10px; color: var(--muted); font-family: 'Space Grotesk', sans-serif; }
+
+  /* right sidebar inside dashboard */
+  .db-sidebar { padding: 24px; }
+  .db-sidebar-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+  .order-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
+  .order-info { display: flex; flex-direction: column; gap: 2px; }
+  .order-name { font-size: 12.5px; font-weight: 600; color: var(--white); font-family: 'Space Grotesk', sans-serif; }
+  .order-prod { font-size: 11px; color: var(--muted); }
+  .order-status { font-size: 10px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; padding: 3px 10px; border-radius: 100px; white-space: nowrap; }
+  .status-delivered { background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.25); }
+  .status-shipped   { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+  .status-pending   { background: rgba(251,191,36,0.12); color: var(--amber); border: 1px solid rgba(251,191,36,0.25); }
+
+  /* bar chart */
+  .db-bottom { border-top: 1px solid var(--border); padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .mini-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+  .bar-row { display: flex; flex-direction: column; gap: 10px; }
+  .bar-item { display: flex; flex-direction: column; gap: 4px; }
+  .bar-top { display: flex; justify-content: space-between; }
+  .bar-label { font-size: 11.5px; color: var(--muted); font-family: 'Space Grotesk', sans-serif; }
+  .bar-val { font-size: 11.5px; font-weight: 700; color: var(--white); font-family: 'Space Grotesk', sans-serif; }
+  .bar-track { height: 6px; background: var(--white-10); border-radius: 100px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 100px; animation: barGrow 1.2s cubic-bezier(0.22,1,0.36,1) both; }
+  .bar-fill.blue   { background: var(--blue); }
+  .bar-fill.green  { background: var(--green); }
+  .bar-fill.purple { background: var(--purple); }
+  .bar-fill.amber  { background: var(--amber); }
+
+  /* channel pie-like */
+  .channel-row { display: flex; flex-direction: column; gap: 10px; }
+  .ch-item { display: flex; align-items: center; gap: 10px; }
+  .ch-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .ch-name { font-size: 12px; color: var(--muted); flex: 1; font-family: 'Space Grotesk', sans-serif; }
+  .ch-pct { font-size: 12px; font-weight: 700; color: var(--white); font-family: 'Space Grotesk', sans-serif; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(180deg, var(--blue), rgba(74,158,231,0.08)); }
+  .tl-item { position: relative; margin-bottom: 20px; background: var(--black-3); border: 1px solid var(--border); border-radius: 14px; padding: 24px 24px 22px; transition: border-color 0.2s, transform 0.2s; }
+  .tl-item:hover { border-color: var(--blue-border); transform: translateX(3px); }
+  .tl-item::before { content: ''; position: absolute; left: -24px; top: 26px; width: 12px; height: 12px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 3px var(--black), 0 0 0 5px rgba(74,158,231,0.3); }
+  .tl-week { font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 2px; color: var(--blue); text-transform: uppercase; margin-bottom: 6px; }
+  .tl-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 14px; }
+  .tl-tasks { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .tl-tasks li { font-size: 13.5px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; }
+  .tl-tasks li::before { content: '↳'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
+
+  /* ── TECH STACK ── */
+  .stack-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .s-pill { background: var(--black-3); border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: 'Space Grotesk', sans-serif; font-weight: 500; color: var(--white-60); display: flex; align-items: center; gap: 8px; transition: border-color 0.15s, color 0.15s, transform 0.15s; }
+  .s-pill:hover { border-color: var(--blue-border); color: var(--white); transform: translateY(-1px); }
+  .s-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+
+  /* ── PRICING ── */
+  .pricing-wrap { border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .pricing-header { background: var(--black-3); padding: 44px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+  .pricing-header::after { content: ''; position: absolute; right: -60px; top: -60px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(74,158,231,0.1), transparent 70%); }
+  .pricing-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
+  .price-big { font-family: 'Space Grotesk', sans-serif; font-size: clamp(52px, 9vw, 80px); font-weight: 700; color: var(--white); letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
+  .price-big sup { font-size: 28px; vertical-align: top; margin-top: 16px; display: inline-block; color: var(--blue); letter-spacing: 0; }
+  .price-note { font-size: 13px; color: var(--muted); font-family: 'Inter', sans-serif; margin-top: 6px; }
+  .price-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; font-family: 'Space Grotesk', sans-serif; }
+  .price-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { background: var(--white-10); border: 1px solid var(--border); border-radius: 8px; padding: 9px 16px; font-size: 13px; color: var(--white-60); display: flex; align-items: center; gap: 8px; }
+  .chip span { font-size: 15px; }
+
+  /* ── PAYMENT TERMS ── */
+  .payment-terms { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid var(--border); }
+  .pt-card { padding: 36px 40px; }
+  .pt-card:first-child { border-right: 1px solid var(--border); }
+  .pt-label { font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .pt-label.advance { color: var(--blue); }
+  .pt-label.balance { color: rgba(255,255,255,0.35); }
+  .pt-amount { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 700; color: var(--white); margin-bottom: 6px; letter-spacing: -0.5px; }
+  .pt-amount.advance { color: var(--blue); }
+  .pt-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .pt-when { display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 600; font-family: 'Space Grotesk', sans-serif; padding: 4px 12px; border-radius: 100px; }
+  .pt-when.advance { background: var(--blue-dim); border: 1px solid var(--blue-border); color: var(--blue); }
+  .pt-when.balance { background: var(--white-10); border: 1px solid var(--border); color: var(--white-60); }
+
+  /* ── INCLUSIONS ── */
+  .inc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .inc-col { padding: 32px 40px; }
+  .inc-col:first-child { border-right: 1px solid var(--border); }
+  .inc-title { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot-blue { background: var(--blue); }
+  .dot-dim { background: rgba(255,255,255,0.25); }
+  .inc-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .inc-list li { font-size: 13.5px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; line-height: 1.55; }
+  .inc-ic { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  /* ── NOTE ── */
+  .note { background: rgba(74,158,231,0.06); border: 1px solid var(--blue-border); border-radius: 12px; padding: 18px 22px; display: flex; gap: 14px; align-items: flex-start; margin-top: 20px; }
+  .note p { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+  .note-ic { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--black-2); border-top: 1px solid var(--border); padding: 40px 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  footer img { height: 26px; opacity: 0.6; }
+  footer p { font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+  footer strong { color: var(--white-60); }
+  .footer-div { width: 40px; height: 1px; background: var(--border); }
+
+  /* ── TOGGLE ── */
+  .toggle-wrap { background: var(--black-2); border-bottom: 1px solid var(--border); padding: 20px 40px; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .toggle-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .toggle-bar { display: flex; align-items: center; gap: 0; background: var(--black-3); border: 1px solid var(--border); border-radius: 12px; padding: 5px; }
+  .toggle-btn { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; padding: 10px 28px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.22s; background: transparent; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .toggle-btn.active { background: var(--blue); color: var(--white); box-shadow: 0 2px 12px rgba(74,158,231,0.35); }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── SHOPIFY STYLES ── */
+  .pros-cons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  .pro-card { background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.2); border-radius: 14px; padding: 24px; }
+  .con-card { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); border-radius: 14px; padding: 24px; }
+  .pc-title { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+  .pc-title.pro { color: var(--green); }
+  .pc-title.con { color: var(--red); }
+  .pc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .pc-list li { font-size: 13.5px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; line-height: 1.55; }
+  .verdict-box { background: var(--black-3); border: 1px solid var(--blue-border); border-radius: 14px; padding: 28px 32px; margin-bottom: 40px; display: flex; gap: 20px; align-items: flex-start; }
+  .verdict-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .verdict-text { font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+  .verdict-text strong { color: var(--white); }
+  .shopify-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  .sp-card { background: var(--black-3); border: 1px solid var(--border); border-radius: 14px; padding: 24px 22px; transition: border-color 0.2s; position: relative; }
+  .sp-card:hover { border-color: var(--blue-border); }
+  .sp-card.highlight { border-color: var(--blue-border); }
+  .sp-label { font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .sp-name { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .sp-price { font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; color: var(--white); letter-spacing: -0.5px; margin-bottom: 4px; }
+  .sp-price span { font-size: 13px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+  .sp-note { font-size: 12px; color: var(--muted); margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .sp-feats { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .sp-feats li { font-size: 12.5px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .sp-feats li::before { content: '·'; color: var(--blue); flex-shrink: 0; font-weight: 700; }
+  .sp-tag { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--blue); color: #fff; font-size: 10px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; padding: 3px 14px; border-radius: 100px; letter-spacing: 1px; white-space: nowrap; text-transform: uppercase; }
+  .devphant-quote-shopify { background: var(--black-3); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 20px; }
+  .dq-header { padding: 32px 36px 28px; border-bottom: 1px solid var(--border); }
+  .dq-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .dq-col { padding: 28px 32px; }
+  .dq-col:first-child { border-right: 1px solid var(--border); }
+  .dq-col-title { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 16px; }
+  .shopify-support { background: rgba(74,158,231,0.06); border: 1px solid var(--blue-border); border-radius: 14px; padding: 28px 32px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .cost-compare { background: var(--black-3); border: 1px solid var(--border); border-radius: 14px; padding: 28px 32px; }
+  .cost-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+  .cost-side { }
+  .cost-side-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .cost-side-val { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -1px; }
+  .cost-side-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .cost-vs { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); text-align: center; background: var(--black-4); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .topbar { padding: 12px 20px; }
+    .hero { padding: 52px 20px 44px; }
+    .hero h1 { font-size: 36px; letter-spacing: -1px; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+    .payment-terms, .inc-grid { grid-template-columns: 1fr; }
+    .pt-card:first-child, .inc-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+    .kpi:nth-child(2) { border-right: none; }
+    .db-body { grid-template-columns: 1fr; }
+    .db-sidebar { border-top: 1px solid var(--border); }
+    .db-bottom { grid-template-columns: 1fr; }
+    section { padding: 44px 0; }
+    .pricing-header { padding: 28px 24px; }
+    .pt-card, .inc-col { padding: 28px 24px; }
+    footer { padding: 32px 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="devphant-logo">
+    <img src="https://devphant.com/images/logo.png" alt="Devphant"/>
+  </div>
+  <div class="topbar-right">
+    <strong>Project Proposal</strong> &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; June 14, 2026
+  </div>
+</div>
+
+<!-- TOGGLE -->
+<div class="toggle-wrap">
+  <span class="toggle-label">Compare Options</span>
+  <div class="toggle-bar">
+    <button class="toggle-btn active" onclick="switchView('vybe')" id="btn-vybe">⚡ Vybe by Devphant</button>
+    <button class="toggle-btn" onclick="switchView('shopify')" id="btn-shopify">🛒 Shopify by Devphant</button>
+  </div>
+</div>
+
+<div class="view active" id="view-vybe">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="prepared-for">
+    <span class="prep-label">Prepared For</span>
+    <span class="prep-sep"></span>
+    <div class="omarun-logo">
+      <span style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#fff;letter-spacing:0.5px;">Omarun Pharma</span>
+    </div>
+  </div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Product Proposal · 2026
+  </div>
+
+  <h1>
+    <span>Vybe</span>
+    <span class="sep">by</span>
+    <span class="by-devphant">Devphant</span>
+  </h1>
+
+  <div class="hero-tagline-row">
+    <p>Commerce that moves with you.</p>
+  </div>
+
+  <p class="hero-sub">A full-stack e-commerce platform built exclusively for Omarun Pharma — mobile-first, fully automated, Pan India ready.</p>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-value"><em>₹</em>2,00,000</div>
+      <div class="stat-label">Total Investment</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">8 <em style="font-size:15px;font-weight:400">wks</em></div>
+      <div class="stat-label">Delivery</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">14<em style="font-size:15px;font-weight:400">+</em></div>
+      <div class="stat-label">Features</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value"><em>∞</em></div>
+      <div class="stat-label">Bug Fixes</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT IS VYBE -->
+<section>
+  <div class="container">
+    <div class="eyebrow animate">The Platform</div>
+    <h2 class="section-title animate delay-1">What is Vybe?</h2>
+    <p class="section-desc animate delay-2">Vybe is not just a website — it's a complete digital business engine for Omarun Pharma. From the moment a customer discovers your product to when it arrives at their doorstep, every step is automated, tracked, and beautifully presented.</p>
+    <div class="highlight-row">
+      <div class="hl-card animate delay-1"><div class="hl-icon">🌿</div><h4>Every Product Has a Story</h4><p>Product pages that explain the Ayurvedic science behind each formula — built to convert visitors into buyers.</p></div>
+      <div class="hl-card animate delay-2"><div class="hl-icon">📱</div><h4>Mobile-First Design</h4><p>Built for how Indians actually shop — on their phone. Fast, thumb-friendly, and low-bandwidth optimised.</p></div>
+      <div class="hl-card animate delay-3"><div class="hl-icon">⚙️</div><h4>You're in Control</h4><p>Change prices, add products, create discount codes — all from a simple admin panel, zero coding needed.</p></div>
+      <div class="hl-card animate delay-4"><div class="hl-icon">🚀</div><h4>Zero Manual Ops</h4><p>Orders automatically trigger shipping, WhatsApp updates, and invoice generation. You just pack the box.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD PREVIEW -->
+<section>
+  <div class="container">
+    <div class="eyebrow animate">Admin Dashboard</div>
+    <h2 class="section-title animate delay-1">Your Business, At a Glance</h2>
+    <p class="section-desc animate delay-2">A real-time command centre built into Vybe. Track revenue, orders, customer growth, and shipment status — all from one screen, on any device.</p>
+
+    <div class="dashboard-wrap animate delay-3">
+      <!-- topbar -->
+      <div class="db-topbar">
+        <div class="db-title-row">
+          <span class="db-dot"></span>
+          <span class="db-title">Vybe Admin — Omarun Pharma</span>
+          <span class="db-badge">Live</span>
+        </div>
+        <span class="db-date">June 2026 &nbsp;·&nbsp; Last updated: just now</span>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-label">Total Revenue</div>
+          <div class="kpi-value" data-target="847200">₹8,47,200</div>
+          <div class="kpi-delta up">↑ 23.4% vs last month</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Orders This Month</div>
+          <div class="kpi-value" data-target="1284">1,284</div>
+          <div class="kpi-delta up">↑ 18.7% vs last month</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Total Customers</div>
+          <div class="kpi-value" data-target="4312">4,312</div>
+          <div class="kpi-delta up">↑ 312 new this month</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Pending Shipments</div>
+          <div class="kpi-value" data-target="47">47</div>
+          <div class="kpi-delta down">↓ 8 requires action</div>
+        </div>
+      </div>
+
+      <!-- Chart + orders -->
+      <div class="db-body">
+        <div class="db-chart">
+          <div class="db-chart-title">Revenue Trend</div>
+          <div class="db-chart-sub">Monthly revenue (₹) · Jan – Jun 2026</div>
+          <div class="chart-svg-wrap">
+            <svg viewBox="0 0 440 140" preserveAspectRatio="none" height="140">
+              <defs>
+                <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4A9EE7" stop-opacity="0.25"/>
+                  <stop offset="100%" stop-color="#4A9EE7" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <!-- grid lines -->
+              <line x1="0" y1="0"   x2="440" y2="0"   stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="0" y1="35"  x2="440" y2="35"  stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="0" y1="70"  x2="440" y2="70"  stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="0" y1="105" x2="440" y2="105" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <!-- area fill -->
+              <path class="chart-area" d="M0,110 L73,95 L146,78 L220,60 L293,42 L366,25 L440,15 L440,140 L0,140 Z"/>
+              <!-- line -->
+              <polyline class="chart-line" points="0,110 73,95 146,78 220,60 293,42 366,25 440,15"/>
+              <!-- dots -->
+              <circle cx="0"   cy="110" r="4" fill="#4A9EE7"/>
+              <circle cx="73"  cy="95"  r="4" fill="#4A9EE7"/>
+              <circle cx="146" cy="78"  r="4" fill="#4A9EE7"/>
+              <circle cx="220" cy="60"  r="4" fill="#4A9EE7"/>
+              <circle cx="293" cy="42"  r="4" fill="#4A9EE7"/>
+              <circle cx="366" cy="25"  r="4" fill="#4A9EE7"/>
+              <circle cx="440" cy="15"  r="5" fill="#4A9EE7" style="filter:drop-shadow(0 0 6px #4A9EE7)"/>
+            </svg>
+          </div>
+          <div class="chart-x-labels">
+            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+          </div>
+        </div>
+
+        <div class="db-sidebar">
+          <div class="db-sidebar-title">Recent Orders</div>
+          <div class="order-row">
+            <div class="order-info">
+              <span class="order-name">Priya Sharma</span>
+              <span class="order-prod">Arthomi Oil · ₹699</span>
+            </div>
+            <span class="order-status status-delivered">Delivered</span>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <span class="order-name">Rahul Mehta</span>
+              <span class="order-prod">Diaboma Powder · ₹849</span>
+            </div>
+            <span class="order-status status-shipped">Shipped</span>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <span class="order-name">Sunita Patel</span>
+              <span class="order-prod">Femicia Tablets · ₹599</span>
+            </div>
+            <span class="order-status status-shipped">Shipped</span>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <span class="order-name">Amit Joshi</span>
+              <span class="order-prod">Testorex · ₹749</span>
+            </div>
+            <span class="order-status status-pending">Pending</span>
+          </div>
+          <div class="order-row">
+            <div class="order-info">
+              <span class="order-name">Kavita Rao</span>
+              <span class="order-prod">Omaslim Capsules · ₹649</span>
+            </div>
+            <span class="order-status status-delivered">Delivered</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar charts -->
+      <div class="db-bottom">
+        <div>
+          <div class="mini-title">Top Products by Revenue</div>
+          <div class="bar-row">
+            <div class="bar-item">
+              <div class="bar-top"><span class="bar-label">Arthomi Oil</span><span class="bar-val">₹1,82,400</span></div>
+              <div class="bar-track"><div class="bar-fill blue" style="width:92%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-top"><span class="bar-label">Diaboma Powder</span><span class="bar-val">₹1,54,800</span></div>
+              <div class="bar-track"><div class="bar-fill green" style="width:78%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-top"><span class="bar-label">Testorex Tablets</span><span class="bar-val">₹1,21,600</span></div>
+              <div class="bar-track"><div class="bar-fill purple" style="width:62%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-top"><span class="bar-label">Femicia Tablets</span><span class="bar-val">₹98,200</span></div>
+              <div class="bar-track"><div class="bar-fill amber" style="width:50%"></div></div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-top"><span class="bar-label">Omaslim Capsules</span><span class="bar-val">₹74,400</span></div>
+              <div class="bar-track"><div class="bar-fill blue" style="width:38%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="mini-title">Order Channels</div>
+          <div class="channel-row">
+            <div class="ch-item"><span class="ch-dot" style="background:var(--blue)"></span><span class="ch-name">Direct Website</span><span class="ch-pct">58%</span></div>
+            <div class="ch-item"><span class="ch-dot" style="background:var(--green)"></span><span class="ch-name">Organic Search (SEO)</span><span class="ch-pct">22%</span></div>
+            <div class="ch-item"><span class="ch-dot" style="background:var(--purple)"></span><span class="ch-name">WhatsApp Referral</span><span class="ch-pct">12%</span></div>
+            <div class="ch-item"><span class="ch-dot" style="background:var(--amber)"></span><span class="ch-name">Social Media</span><span class="ch-pct">8%</span></div>
+          </div>
+          <div style="margin-top:24px;">
+            <div class="mini-title">COD Remittance Pending</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--amber);margin-bottom:4px;">₹38,400</div>
+            <div style="font-size:12px;color:var(--muted);">Expected in your bank by June 16, 2026</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="container">
+    <div class="eyebrow animate">Scope of Work</div>
+    <h2 class="section-title animate delay-1">Every Feature, Explained Simply</h2>
+    <p class="section-desc animate delay-2">14 powerful modules working together. Designed so your team can manage everything without calling a developer.</p>
+    <div class="features-grid">
+      <div class="feat animate delay-1"><div class="feat-num">01</div><span class="feat-icon">💳</span><h3>Payment Gateway</h3><p>UPI, credit/debit cards, netbanking, and EMI — all supported. Failed payments are auto-retried and refunds are processed back to the customer hands-free.</p><span class="feat-tag">Razorpay / PayU</span></div>
+      <div class="feat animate delay-2"><div class="feat-num">02</div><span class="feat-icon">🚚</span><h3>Automated Shipping via ShipRocket</h3><p>The moment an order is placed, Vybe automatically creates a shipment, assigns the best courier for that pincode, generates a label, and schedules pickup. Pan India to 29,000+ pincodes — no manual work.</p><span class="feat-tag">ShipRocket API</span></div>
+      <div class="feat animate delay-3"><div class="feat-num">03</div><span class="feat-icon">💵</span><h3>COD Management</h3><p>Customers who prefer cash at the door are fully supported. Includes order verification, delivery tracking, and automatic remittance so you know exactly when money hits your bank.</p><span class="feat-tag">Pan India COD</span></div>
+      <div class="feat animate delay-1"><div class="feat-num">04</div><span class="feat-icon">🔄</span><h3>Returns & Reverse Pickup</h3><p>Customer raises a return on the website, the courier collects it, and you process a refund in one click after inspection. Fully automated from request to refund.</p><span class="feat-tag">Automated Return Flow</span></div>
+      <div class="feat animate delay-2"><div class="feat-num">05</div><span class="feat-icon">🛍️</span><h3>Product Pages with Storytelling</h3><p>All 9 products get dedicated, beautifully designed pages — ingredients, benefits, Ayurvedic science, usage instructions, and customer reviews. Built to convert.</p><span class="feat-tag">Dynamic via Admin</span></div>
+      <div class="feat animate delay-3"><div class="feat-num">06</div><span class="feat-icon">🎟️</span><h3>Offers & Coupon Management</h3><p>Create discount codes, set expiry dates, apply to specific products — all from the admin panel. Run a sale without calling a developer.</p><span class="feat-tag">Admin Controlled</span></div>
+      <div class="feat animate delay-1"><div class="feat-num">07</div><span class="feat-icon">✍️</span><h3>Blog Management</h3><p>Write and publish Ayurveda articles and health tips. Blogs drive free organic traffic from Google — growing Omarun's reach without ad spend.</p><span class="feat-tag">SEO Optimised</span></div>
+      <div class="feat animate delay-2"><div class="feat-num">08</div><span class="feat-icon">🛒</span><h3>Cart & Customer Profile</h3><p>Customers save their address, track orders, view purchase history, and manage returns from their account. Cart is saved even if they close and return later.</p><span class="feat-tag">Persistent Cart</span></div>
+      <div class="feat animate delay-3"><div class="feat-num">09</div><span class="feat-icon">📦</span><h3>Inventory Management</h3><p>Set stock quantities per product. Low-stock alerts fire automatically. When stock hits zero, the product shows "Out of Stock" and stops accepting orders. No overselling, ever.</p><span class="feat-tag">Admin Dashboard</span></div>
+      <div class="feat animate delay-1"><div class="feat-num">10</div><span class="feat-icon">💬</span><h3>WhatsApp Order Updates</h3><p>Order placed, shipped, out for delivery, delivered — customers get a WhatsApp message with their tracking link at every stage. Builds trust, reduces inbound calls.</p><span class="feat-tag">WhatsApp Business API</span></div>
+      <div class="feat animate delay-2"><div class="feat-num">11</div><span class="feat-icon">📧</span><h3>Email Notifications</h3><p>Branded emails for order confirmation, shipping updates, and invoices. Also supports promotional email campaigns to your customer list from the admin panel.</p><span class="feat-tag">Branded Templates</span></div>
+      <div class="feat animate delay-3"><div class="feat-num">12</div><span class="feat-icon">📊</span><h3>Business Dashboard</h3><p>Revenue, orders, top products, pending shipments, COD remittance, and growth — all in real time, on any device. Exactly like the preview shown above.</p><span class="feat-tag">Analytics Panel</span></div>
+      <div class="feat animate delay-1"><div class="feat-num">13</div><span class="feat-icon">🔍</span><h3>SEO & Content Strategy</h3><p>Every page built to rank on Google — meta tags, schema markup, sitemap, and fast loading — so Omarun shows up when people search for natural health solutions.</p><span class="feat-tag">Technical + On-Page SEO</span></div>
+      <div class="feat animate delay-2"><div class="feat-num">14</div><span class="feat-icon">🎨</span><h3>UI/UX — Mobile First</h3><p>Clean, nature-inspired aesthetic that reflects the Ayurvedic brand. Fast page loads, intuitive navigation, and a checkout flow that completes in under 60 seconds.</p><span class="feat-tag">Figma → Production</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+  <div class="container">
+    <div class="eyebrow animate">8-Week Delivery Plan</div>
+    <h2 class="section-title animate delay-1">How We Build Vybe</h2>
+    <p class="section-desc animate delay-2">A week-by-week plan so you always know what's being built and when you can expect to see it.</p>
+    <div class="timeline">
+      <div class="tl-item animate delay-1"><div class="tl-week">Week 1 – 2</div><div class="tl-title">🎨 Design & Foundation</div><ul class="tl-tasks"><li>Brand-aligned UI design — Figma mockups shared with you for approval before any code is written</li><li>Set up codebase, database structure, and hosting environment</li><li>Design mobile-first homepage, product listing, and product detail pages</li><li>Create the Admin Panel — simple enough for non-tech users</li></ul></div>
+      <div class="tl-item animate delay-2"><div class="tl-week">Week 3 – 4</div><div class="tl-title">🛍️ Core Store Features</div><ul class="tl-tasks"><li>Build product listing with dynamic admin control — add, edit, or remove products anytime</li><li>Develop cart, wishlist, and customer profile & login system</li><li>Coupon & offer engine — percentage discounts, flat off, buy-X-get-Y</li><li>Inventory tracking with low-stock alerts and auto out-of-stock</li></ul></div>
+      <div class="tl-item animate delay-3"><div class="tl-week">Week 5</div><div class="tl-title">💳 Payments & Checkout</div><ul class="tl-tasks"><li>Integrate Razorpay/PayU — UPI, cards, netbanking, EMI, and COD</li><li>Checkout flow — address → payment → confirmation in under 60 seconds</li><li>Handle success, failure, and partial payment scenarios gracefully</li><li>Auto-generate and email invoice PDFs to customers on every order</li></ul></div>
+      <div class="tl-item animate delay-1"><div class="tl-week">Week 6</div><div class="tl-title">🚚 Shipping Automation</div><ul class="tl-tasks"><li>Full ShipRocket API — auto order creation, AWB, courier assignment, pickup scheduling</li><li>COD management with remittance tracking dashboard</li><li>Reverse pickup flow for returns with customer-facing return portal</li><li>Real-time shipment tracking page for customers</li></ul></div>
+      <div class="tl-item animate delay-2"><div class="tl-week">Week 7</div><div class="tl-title">💬 Notifications, Blogs & SEO</div><ul class="tl-tasks"><li>WhatsApp notifications — order placed, shipped, out for delivery, delivered</li><li>Email notification system with fully branded templates</li><li>Blog management module — write, schedule, and publish from admin panel</li><li>Technical SEO across all pages — meta, schema, sitemap, robots.txt</li></ul></div>
+      <div class="tl-item animate delay-3"><div class="tl-week">Week 8</div><div class="tl-title">📊 Dashboard, QA & Launch</div><ul class="tl-tasks"><li>Business analytics dashboard — revenue, orders, top products, pending COD, monthly growth</li><li>Full QA across mobile, tablet, and desktop — real device testing</li><li>Performance optimisation — page speed and image compression</li><li>Live deployment, DNS, SSL certificate, and handover training session for your team</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section>
+  <div class="container">
+    <div class="eyebrow animate">Built With</div>
+    <h2 class="section-title animate delay-1">Technology Stack</h2>
+    <p class="section-desc animate delay-2">Enterprise-grade tools used by India's largest e-commerce companies — adapted for speed, reliability, and easy management.</p>
+    <div class="stack-pills animate delay-3">
+      <div class="s-pill">React.js (Frontend)</div>
+      <div class="s-pill">Node.js (Backend)</div>
+      <div class="s-pill">PostgreSQL (Database)</div>
+      <div class="s-pill">ShipRocket API</div>
+      <div class="s-pill">Razorpay / PayU</div>
+      <div class="s-pill">WhatsApp Business API</div>
+      <div class="s-pill">AWS / DigitalOcean</div>
+      <div class="s-pill">Twilio / SendGrid</div>
+      <div class="s-pill">Google Analytics 4</div>
+      <div class="s-pill">SSL / HTTPS Secured</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <div class="container">
+    <div class="eyebrow animate">Investment</div>
+    <h2 class="section-title animate delay-1">Simple, All-Inclusive Pricing</h2>
+    <p class="section-desc animate delay-2">One flat fee. No hidden charges. No surprise invoices mid-project.</p>
+
+    <div class="pricing-wrap animate delay-3">
+      <div class="pricing-header">
+        <div class="pricing-eyebrow">Total Project Cost</div>
+        <div class="price-big"><sup>₹</sup>2,00,000</div>
+        <div class="price-note">No GST applicable · One-time fixed cost</div>
+        <div class="price-sub" style="margin-top:8px;">Complete delivery in 8 weeks &nbsp;·&nbsp; Mobile-First &nbsp;·&nbsp; Pan India Ready</div>
+        <div class="price-chips">
+          <div class="chip"><span>☁️</span> Hosting & Deployment</div>
+          <div class="chip"><span>🛡️</span> Lifetime Bug Fixes</div>
+          <div class="chip"><span>🎁</span> 14 Days Free Post-Launch Support</div>
+          <div class="chip"><span>📈</span> SEO & Content Setup</div>
+          <div class="chip"><span>🔗</span> All 3rd Party Integrations</div>
+        </div>
+      </div>
+
+      <div class="payment-terms">
+        <div class="pt-card">
+          <div class="pt-label advance">Advance — To Begin</div>
+          <div class="pt-amount advance">₹1,00,000</div>
+          <p class="pt-desc">50% paid upfront. This confirms the project kick-off, design starts immediately, and your slot in our development schedule is secured.</p>
+          <span class="pt-when advance">Due: Before Week 1 Starts</span>
+        </div>
+        <div class="pt-card">
+          <div class="pt-label balance">Balance — On Completion</div>
+          <div class="pt-amount">₹1,00,000</div>
+          <p class="pt-desc">Remaining 50% after the complete platform is delivered, tested, and you're satisfied — paid before source code handover and go-live.</p>
+          <span class="pt-when balance">Due: After Final Delivery & Approval</span>
+        </div>
+      </div>
+
+      <div class="inc-grid">
+        <div class="inc-col">
+          <div class="inc-title" style="color:var(--blue);"><span class="dot dot-blue"></span> What's Included</div>
+          <ul class="inc-list">
+            <li><span class="inc-ic">✅</span> One-time cloud setup & deployment to live server</li>
+            <li><span class="inc-ic">✅</span> All 3rd party API integrations (ShipRocket, Payment, WhatsApp, Email)</li>
+            <li><span class="inc-ic">✅</span> SEO configuration & initial content structure</li>
+            <li><span class="inc-ic">✅</span> 14 days of free post-launch support & training</li>
+            <li><span class="inc-ic">✅</span> Bug fixing — free for the lifetime of the product</li>
+            <li><span class="inc-ic">✅</span> Admin panel training session for your team</li>
+            <li><span class="inc-ic">✅</span> Mobile, tablet & desktop testing & QA</li>
+            <li><span class="inc-ic">✅</span> SSL certificate & HTTPS security setup</li>
+          </ul>
+        </div>
+        <div class="inc-col">
+          <div class="inc-title" style="color:rgba(255,255,255,0.35);"><span class="dot dot-dim"></span> Not Included (Client's Ongoing Costs)</div>
+          <ul class="inc-list">
+            <li><span class="inc-ic">❌</span> WhatsApp Business API monthly charges (paid to Meta / provider)</li>
+            <li><span class="inc-ic">❌</span> Email service monthly cost (~₹1,000–2,500/mo via SendGrid)</li>
+            <li><span class="inc-ic">❌</span> Cloud server hosting (AWS/DigitalOcean ~₹2,000–4,000/mo)</li>
+            <li><span class="inc-ic">❌</span> Domain name purchase & renewal (~₹800–1,500/year)</li>
+            <li><span class="inc-ic">❌</span> Logo designing (if not already finalised)</li>
+            <li><span class="inc-ic">❌</span> Legal policies — Privacy Policy, T&C, Cancellation & Refund</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="note animate delay-4">
+      <span class="note-ic">💡</span>
+      <p><strong>GST invoice not applicable on this project.</strong> All third-party API costs are billed directly by the respective service providers to Omarun Pharma. Devphant does not mark up any third-party costs. This proposal is valid for 30 days from June 14, 2026.</p>
+    </div>
+  </div>
+</section>
+
+<!-- POST LAUNCH PLANS -->
+<section>
+  <div class="container">
+    <div class="eyebrow animate">Post-Launch</div>
+    <h2 class="section-title animate delay-1">Keep Vybe Running & Growing</h2>
+    <p class="section-desc animate delay-2">The ₹2,00,000 project cost builds and delivers your platform. These plans are completely separate — optional monthly partnerships that ensure Omarun Pharma always has the right support to operate and grow after go-live.</p>
+
+    <!-- Plans Grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" class="animate delay-3">
+
+      <!-- Remote Plan -->
+      <div style="background:var(--black-3);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--blue-border)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="padding:30px 30px 24px;border-bottom:1px solid var(--border);">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">Remote Plan</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:42px;font-weight:700;color:var(--white);letter-spacing:-1.5px;line-height:1;">₹12,000<span style="font-size:15px;font-weight:400;color:var(--muted);letter-spacing:0;"> / month</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px;font-family:'Space Grotesk',sans-serif;">+ Cloud server cost at actuals (no markup)</div>
+          <div style="margin-top:18px;display:inline-block;background:var(--blue-dim);border:1px solid var(--blue-border);color:var(--blue);font-size:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;padding:4px 14px;border-radius:100px;letter-spacing:1px;">MIN. 6-MONTH COMMITMENT</div>
+        </div>
+        <div style="padding:24px 30px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">What's Covered</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:11px;">
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Content updates — banners, homepage copy, announcements</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Product listing management — add, edit, reorder, update images & prices</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Blog publishing & SEO content uploads</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Platform health monitoring & uptime checks</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Priority support via WhatsApp — response within 4 hours</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Monthly performance report — traffic, orders, top products</li>
+          </ul>
+          <div style="margin-top:20px;padding:14px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;">
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;"><span style="color:var(--white);font-weight:600;">Not included:</span> New feature development is scoped and quoted separately as a one-time project cost.</div>
+          </div>
+        </div>
+        <div style="padding:0 30px 28px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--muted);line-height:1.7;">
+            <span style="color:rgba(255,255,255,0.35);">·</span> Devphant team works remotely<br/>
+            <span style="color:rgba(255,255,255,0.35);">·</span> Managed via shared task tracker & WhatsApp<br/>
+            <span style="color:rgba(255,255,255,0.35);">·</span> 30 days written notice after 6-month lock-in
+          </div>
+        </div>
+      </div>
+
+      <!-- On-Site Plan -->
+      <div style="background:var(--black-3);border:1px solid var(--blue-border);border-radius:20px;overflow:hidden;position:relative;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--blue-border)'">
+        <div style="position:absolute;top:16px;right:16px;background:var(--blue);color:#fff;font-size:10px;font-weight:700;font-family:'Space Grotesk',sans-serif;padding:4px 12px;border-radius:100px;letter-spacing:1px;text-transform:uppercase;">Recommended</div>
+        <div style="padding:30px 30px 24px;border-bottom:1px solid var(--border);">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">On-Site Plan</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:42px;font-weight:700;color:var(--white);letter-spacing:-1.5px;line-height:1;">₹45,000<span style="font-size:15px;font-weight:400;color:var(--muted);letter-spacing:0;"> / month</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px;font-family:'Space Grotesk',sans-serif;">All-inclusive · No additional server billing</div>
+          <div style="margin-top:18px;display:inline-block;background:var(--blue-dim);border:1px solid var(--blue-border);color:var(--blue);font-size:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;padding:4px 14px;border-radius:100px;letter-spacing:1px;">MIN. 6-MONTH COMMITMENT</div>
+        </div>
+        <div style="padding:24px 30px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">What's Covered</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:11px;">
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Everything in the Remote Plan</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> One dedicated Devphant team member physically present at your office</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Day-to-day operations support — order management, shipment tracking, COD reconciliation</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Customer support handling — order queries, return requests, WhatsApp responses</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Inventory updates, stock alerts, and reorder coordination</li>
+            <li style="display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;margin-top:1px;">✓</span> Weekly business report + strategy sync with Omarun team</li>
+          </ul>
+          <div style="margin-top:20px;padding:14px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;">
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;"><span style="color:var(--white);font-weight:600;">Not included:</span> New feature development is scoped and quoted separately as a one-time project cost.</div>
+          </div>
+        </div>
+        <div style="padding:0 30px 28px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--muted);line-height:1.7;">
+            <span style="color:rgba(255,255,255,0.35);">·</span> Person works exclusively for Omarun Pharma<br/>
+            <span style="color:rgba(255,255,255,0.35);">·</span> Managed by Devphant, deployed at your location<br/>
+            <span style="color:rgba(255,255,255,0.35);">·</span> 30 days written notice after 6-month lock-in
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Comparison callout -->
+    <div style="margin-top:20px;background:var(--black-3);border:1px solid var(--border);border-radius:14px;padding:24px 28px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;" class="animate delay-4">
+      <div style="padding-right:24px;border-right:1px solid var(--border);">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Remote · 6 months</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--white);">₹72,000</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">+ server at actuals</div>
+      </div>
+      <div style="padding:0 24px;border-right:1px solid var(--border);">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">On-Site · 6 months</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--blue);">₹2,70,000</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">All-inclusive</div>
+      </div>
+      <div style="padding-left:24px;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Important Note</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;">Both plans are <span style="color:var(--white);font-weight:500;">separate from & over and above</span> the ₹2,00,000 Vybe platform cost.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</div><!-- end view-vybe -->
+
+<!-- SHOPIFY VIEW -->
+<div class="view" id="view-shopify">
+
+<div class="hero" style="background:var(--black-2);">
+  <div class="hero-glow" style="background:radial-gradient(ellipse, rgba(149,191,71,0.15) 0%, transparent 70%);"></div>
+  <div class="prepared-for">
+    <span class="prep-label">Prepared For</span>
+    <span class="prep-sep"></span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#fff;letter-spacing:0.5px;">Omarun Pharma</span>
+  </div>
+  <div class="hero-badge" style="background:rgba(149,191,71,0.1);border-color:rgba(149,191,71,0.3);color:#95BF47;">
+    <span class="badge-dot" style="background:#95BF47;animation:none;box-shadow:none;"></span>
+    Shopify Option · 2026
+  </div>
+  <h1>
+    <span>Shopify</span>
+    <span class="sep">by</span>
+    <span style="color:#95BF47;">Devphant</span>
+  </h1>
+  <div class="hero-tagline-row">
+    <p>Quick launch. Proven platform. Lower upfront cost.</p>
+  </div>
+  <p class="hero-sub">A Shopify-powered store built by Devphant — live in 2 weeks. Best for businesses that want to start selling fast before committing to a custom platform.</p>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-value" style="color:#95BF47;">₹45,000</div><div class="stat-label">Setup Cost</div></div>
+    <div class="stat-item"><div class="stat-value">2 <em style="font-size:15px;font-weight:400">wks</em></div><div class="stat-label">Go Live</div></div>
+    <div class="stat-item"><div class="stat-value">₹<em style="font-size:20px;">2k–8k</em></div><div class="stat-label">Shopify/Month*</div></div>
+    <div class="stat-item"><div class="stat-value"><em>1–2</em><span style="font-size:15px;font-weight:400;color:var(--red);">%</span></div><div class="stat-label">Txn Fee</div></div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);margin-top:16px;">* Shopify subscription paid directly by Omarun Pharma to Shopify. Not part of Devphant's quote.</p>
+</div>
+
+<section>
+  <div class="container">
+    <div class="eyebrow">Honest Assessment</div>
+    <h2 class="section-title">Is Shopify Right for Omarun?</h2>
+    <p class="section-desc">A transparent breakdown of what you gain and what you give up — so you can make the right call for your business.</p>
+
+    <div class="pros-cons-grid">
+      <div class="pro-card">
+        <div class="pc-title pro">✅ Pros</div>
+        <ul class="pc-list">
+          <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Quick go-live in 2 weeks</strong> — No custom development cycles. Your store is live and selling within 14 days of kickoff.</div></li>
+          <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Lower upfront cost</strong> — ₹45,000 vs ₹2,00,000. A smart entry point to validate sales before committing to a custom platform.</div></li>
+          <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Proven, stable platform</strong> — Shopify handles hosting, security, and uptime. Trusted by 4M+ stores globally.</div></li>
+          <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">Easy product management</strong> — Your team can manage listings without any training or technical knowledge.</div></li>
+          <li><span style="color:var(--green);flex-shrink:0;margin-top:2px;">↑</span><div><strong style="color:var(--white);">App ecosystem</strong> — Thousands of plug-and-play apps for reviews, upsells, email, and more.</div></li>
+        </ul>
+      </div>
+      <div class="con-card">
+        <div class="pc-title con">⚠️ Cons</div>
+        <ul class="pc-list">
+          <li><span style="color:var(--red);flex-shrink:0;margin-top:2px;">↓</span><div><strong style="color:var(--white);">Transaction fee on every 3rd party payment (1–2%)</strong> — On ₹10L/month revenue, that is ₹10,000–₹20,000 lost every single month to Shopify. On Vybe it is ₹0.</div></li>
+          <li><span style="color:var(--red);flex-shrink:0;margin-top:2px;">↓</span><div><strong style="color:var(--white);">Limited dashboard & business reports</strong> — No COD remittance tracking, no product-wise profit view, no custom business metrics unless you pay for expensive third-party apps.</div></li>
+          <li><span style="color:var(--red);flex-shrink:0;margin-top:2px;">↓</span><div><strong style="color:var(--white);">Scaling gets expensive</strong> — Basic plan (₹2,000/mo) limits product listings. The Grow plan hits ₹8,000/month — that is ₹96,000/year just for the platform.</div></li>
+          <li><span style="color:var(--red);flex-shrink:0;margin-top:2px;">↓</span><div><strong style="color:var(--white);">You do not own the platform</strong> — Shopify can change pricing or remove features. With Vybe, you own 100% of the code permanently.</div></li>
+          <li><span style="color:var(--red);flex-shrink:0;margin-top:2px;">↓</span><div><strong style="color:var(--white);">No custom brand storytelling</strong> — Shopify themes are generic. Building immersive Ayurvedic product pages requires expensive custom theme development.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verdict-box">
+      <div style="font-size:32px;flex-shrink:0;">🧠</div>
+      <div>
+        <div class="verdict-title">Devphant's Honest Verdict</div>
+        <p class="verdict-text">Shopify makes sense if Omarun wants to <strong>test the market in 2 weeks</strong> with a low upfront investment. But here is the real math: the 1–2% transaction fee alone at ₹10L/month adds up to <strong>₹1,20,000–₹2,40,000 lost per year</strong> — money going to Shopify, not your business. Add ₹96,000/year for the Grow plan and you have spent more than the cost of Vybe within 18 months, <strong>with no ownership, no custom dashboard, and no brand differentiation.</strong><br/><br/><strong>Our recommendation:</strong> If budget is the only constraint today, start Shopify — but plan to migrate to Vybe within 12–18 months. Or invest in Vybe now and own your platform forever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="eyebrow">Shopify Subscription</div>
+    <h2 class="section-title">Shopify Plans — Paid Directly by You</h2>
+    <p class="section-desc">These are Shopify's own monthly charges, paid directly by Omarun Pharma to Shopify. Devphant's ₹45,000 fee is separate and one-time.</p>
+
+    <div class="shopify-plans">
+      <div class="sp-card">
+        <div class="sp-label">For Beginners</div>
+        <div class="sp-name">Basic Plan</div>
+        <div class="sp-price">₹2,000 <span>/ month</span></div>
+        <div class="sp-note">Limited product listings · Good to start, but will outgrow quickly</div>
+        <ul class="sp-feats">
+          <li>Limited product listings</li>
+          <li>2 staff accounts only</li>
+          <li>Basic reports only</li>
+          <li>2% transaction fee on 3rd party payments</li>
+          <li>No advanced analytics</li>
+        </ul>
+      </div>
+      <div class="sp-card highlight">
+        <div class="sp-tag">Required at Scale</div>
+        <div class="sp-label">For Growing Businesses</div>
+        <div class="sp-name">Shopify Grow Plan</div>
+        <div class="sp-price" style="color:var(--blue);">₹8,000 <span>/ month</span></div>
+        <div class="sp-note">Needed once you have real order volume & full product range</div>
+        <ul class="sp-feats">
+          <li>Unlimited products</li>
+          <li>5 staff accounts</li>
+          <li>Standard reports (still limited)</li>
+          <li>1% transaction fee on 3rd party payments</li>
+          <li>Abandoned cart recovery</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note" style="margin-bottom:40px;">
+      <span style="font-size:18px;flex-shrink:0;">⚠️</span>
+      <p>These subscription costs are <strong>paid directly by Omarun Pharma to Shopify.</strong> They are not part of Devphant's ₹45,000 setup fee. Devphant does not collect or manage Shopify subscription billing.</p>
+    </div>
+
+    <div class="eyebrow" style="margin-top:0;">Devphant Quote</div>
+    <h2 class="section-title">What Devphant Delivers — ₹45,000</h2>
+    <p class="section-desc">A one-time fixed cost to build, configure, and launch your Shopify store professionally within 2 weeks.</p>
+
+    <div class="devphant-quote-shopify">
+      <div class="dq-header">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#95BF47;margin-bottom:12px;">One-Time Setup Fee</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:52px;font-weight:700;color:var(--white);letter-spacing:-2px;line-height:1;margin-bottom:8px;">₹45,000</div>
+        <div style="font-size:13px;color:var(--muted);">No GST applicable &nbsp;·&nbsp; Go live in 2 weeks &nbsp;·&nbsp; Fixed cost, no surprises</div>
+      </div>
+      <div class="dq-body">
+        <div class="dq-col">
+          <div class="dq-col-title">✅ Included in ₹45,000</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Custom Shopify theme aligned to Omarun brand</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> All 9 products listed with descriptions, images & pricing</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Payment gateway integration (Razorpay) incl. COD</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> ShipRocket integration for automated shipping</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Homepage, product pages & basic blog setup</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Mobile-responsive design & basic SEO config</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Domain connection & SSL setup</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--blue);flex-shrink:0;">✓</span> 14 days post-launch support</li>
+          </ul>
+        </div>
+        <div class="dq-col">
+          <div class="dq-col-title">❌ Not Included</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--red);flex-shrink:0;">✗</span> Shopify monthly subscription (paid by you to Shopify)</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--red);flex-shrink:0;">✗</span> Shopify transaction fees (1–2% per order)</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--red);flex-shrink:0;">✗</span> Custom business dashboard or advanced analytics</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--red);flex-shrink:0;">✗</span> WhatsApp notification automation</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--red);flex-shrink:0;">✗</span> Custom Ayurvedic product storytelling pages</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--red);flex-shrink:0;">✗</span> Domain name cost</li>
+            <li style="display:flex;gap:10px;font-size:13.5px;color:var(--muted);align-items:flex-start;line-height:1.55;"><span style="color:var(--red);flex-shrink:0;">✗</span> Legal policies (Privacy Policy, T&C, Refund)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">Devphant Support Plan</div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:20px;">Post-launch support managed by Devphant. Choose the tier that fits your operations — both have a minimum 6-month commitment. New feature development is always scoped and quoted separately.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+        <div style="background:var(--black-3);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--blue-border)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="padding:22px 24px 16px;border-bottom:1px solid var(--border);">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Remote Plan</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;color:var(--white);letter-spacing:-1px;line-height:1;margin-bottom:4px;">₹8,000<span style="font-size:13px;font-weight:400;color:var(--muted);letter-spacing:0;"> / month</span></div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Devphant team manages everything remotely</div>
+            <div style="display:inline-block;background:var(--blue-dim);border:1px solid var(--blue-border);color:var(--blue);font-size:10px;font-weight:700;font-family:'Space Grotesk',sans-serif;padding:3px 12px;border-radius:100px;letter-spacing:1px;text-transform:uppercase;">MIN. 6 MONTHS</div>
+          </div>
+          <div style="padding:18px 24px;">
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Product listing updates — add, edit, remove, reprice</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Homepage banners, offers &amp; promotional content</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Blog publishing &amp; SEO content uploads</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Platform monitoring &amp; uptime checks</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Priority WhatsApp support — response within 4 hrs</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Monthly performance report — traffic, orders, top products</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background:var(--black-3);border:1px solid var(--blue-border);border-radius:16px;overflow:hidden;position:relative;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--blue-border)'">
+          <div style="position:absolute;top:14px;right:14px;background:var(--blue);color:#fff;font-size:10px;font-weight:700;font-family:'Space Grotesk',sans-serif;padding:3px 12px;border-radius:100px;letter-spacing:1px;text-transform:uppercase;">Recommended</div>
+          <div style="padding:22px 24px 16px;border-bottom:1px solid var(--border);">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">On-Site Plan</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;color:var(--white);letter-spacing:-1px;line-height:1;margin-bottom:4px;">₹45,000<span style="font-size:13px;font-weight:400;color:var(--muted);letter-spacing:0;"> / month</span></div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Dedicated person at your Jogeshwari office</div>
+            <div style="display:inline-block;background:var(--blue-dim);border:1px solid var(--blue-border);color:var(--blue);font-size:10px;font-weight:700;font-family:'Space Grotesk',sans-serif;padding:3px 12px;border-radius:100px;letter-spacing:1px;text-transform:uppercase;">MIN. 6 MONTHS</div>
+          </div>
+          <div style="padding:18px 24px;">
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:9px;">
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Everything in Remote Plan</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Dedicated Devphant person physically at your office, exclusively for Omarun</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Daily ops — order management, shipment tracking, COD reconciliation</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Customer support — order queries, returns, WhatsApp responses</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Inventory coordination &amp; stock alert management</li>
+              <li style="display:flex;gap:9px;font-size:13px;color:var(--muted);align-items:flex-start;line-height:1.5;"><span style="color:var(--blue);flex-shrink:0;">✓</span> Weekly strategy sync with Omarun leadership team</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="background:var(--black-3);border:1px solid var(--border);border-radius:16px;padding:28px 32px;margin-top:20px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:20px;text-align:center;">Real Cost Comparison — Year 1</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <div style="padding-right:24px;border-right:1px solid var(--border);">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600;">🛒 Shopify Route</div>
+          <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--muted);">
+            <div style="display:flex;justify-content:space-between;"><span>Devphant setup (one-time)</span><span style="color:var(--white);">₹45,000</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Shopify Grow plan (₹8k × 12)</span><span style="color:var(--white);">₹96,000</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Txn fees ~1.5% on ₹10L/mo</span><span style="color:var(--red);">₹1,80,000</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Devphant support Remote (₹8k × 12)</span><span style="color:var(--white);">₹96,000</span></div>
+            <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-family:'Space Grotesk',sans-serif;"><span style="color:var(--white);">Year 1 Total</span><span style="color:var(--red);font-size:20px;">₹4,17,000</span></div>
+            <div style="font-size:11.5px;color:var(--muted);margin-top:2px;">You own nothing. Same costs repeat Year 2.</div>
+          </div>
+        </div>
+        <div style="padding-left:24px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600;">⚡ Vybe Route</div>
+          <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;color:var(--muted);">
+            <div style="display:flex;justify-content:space-between;"><span>Vybe platform (one-time, yours forever)</span><span style="color:var(--white);">₹2,00,000</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Server hosting (₹3k × 12)</span><span style="color:var(--white);">₹36,000</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Txn fees (0% — you choose gateway)</span><span style="color:var(--green);">₹0</span></div>
+            <div style="display:flex;justify-content:space-between;"><span>Devphant support (₹12k × 12)</span><span style="color:var(--white);">₹1,44,000</span></div>
+            <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-family:'Space Grotesk',sans-serif;"><span style="color:var(--white);">Year 1 Total</span><span style="color:var(--green);font-size:20px;">₹3,80,000</span></div>
+            <div style="font-size:11.5px;color:var(--green);margin-top:2px;">Year 2 drops to ~₹1,80,000. You own the platform.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px;text-align:center;padding:14px;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.2);border-radius:10px;font-size:13px;color:var(--green);font-family:'Space Grotesk',sans-serif;font-weight:600;">
+        Vybe saves ₹37,000 in Year 1 and ₹2,37,000+ in Year 2 onwards — while giving you full ownership, custom branding, and zero platform dependency.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</div><!-- end view-shopify -->
+
+
+<!-- FOOTER -->
+<footer>
+  <img src="https://devphant.com/images/logo.png" alt="Devphant"
+       onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+  <span style="display:none;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#4A9EE7;">D<span style="color:#fff">evphant</span></span>
+  <div class="footer-div"></div>
+  <p>Proposal prepared for <strong>Omarun Pharma Pvt. Ltd.</strong>, Jogeshwari West, Mumbai – 400102<br/>GMP Certified · Free Sale Certificate Holder · Maharashtra FDA Licensed</p>
+  <p style="font-size:11.5px;color:rgba(255,255,255,0.2);">Confidential · Valid 30 days from June 14, 2026</p>
+</footer>
+
+<script>
+  function switchView(v) {
+    document.getElementById('view-vybe').classList.toggle('active', v === 'vybe');
+    document.getElementById('view-shopify').classList.toggle('active', v === 'shopify');
+    document.getElementById('btn-vybe').classList.toggle('active', v === 'vybe');
+    document.getElementById('btn-shopify').classList.toggle('active', v === 'shopify');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+  // Animate bar fills on enter
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-fill').forEach((bar, i) => {
+          bar.style.animationDelay = (i * 0.1) + 's';
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const dbWrap = document.querySelector('.dashboard-wrap');
+  if (dbWrap) barObserver.observe(dbWrap);
+</script>
+</body>
+</html>
